@@ -1,5 +1,5 @@
 /**
- * Solve with Vectors
+ * Part 2: Solve with Vectors
 */
 
 #include <iostream>

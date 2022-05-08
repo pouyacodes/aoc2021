@@ -1,5 +1,5 @@
 /**
- * Solve using arrays
+ * Part 2: Solve using arrays
 */
 
 #include <iostream>
