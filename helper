@@ -1,0 +1,99 @@
+#!/bin/sh
+
+perror() {
+
+	if [ "$1" ]
+	then
+		>&2 echo "$(basename $script_filename): $1"
+
+		if [ "$2" ] && [ $2 -ne 0 ]
+		then
+			exit $2
+		fi
+	fi
+
+}
+
+help() {
+
+	echo "Usage: $script_filename COMMAND-NAME [COMMAND-OPTIONS]"
+	echo
+	echo "List of available commands: "
+
+	for func in $funcs
+	do
+		echo ' ' $func
+	done
+
+	if [ "$1" ] && [ $1 -gt 0 ]
+	then
+		return 1
+	fi
+}
+
+init() {
+
+	if [ ! "$1" ]
+	then
+		perror "ERROR: You must specify project template. "
+		perror "Use \`$script_filename list\` to see your available templates." 1
+	fi
+
+	local template="$templates_dir/$1"
+
+	if [ ! -e "$template" ]
+	then
+		perror "$template: No such template found."
+		perror "Use \`$script_filename list\` to see your available templates." 1
+	fi
+
+	local already_projects_length="$(find * -maxdepth 0 -type d 2> /dev/null | wc -l)"
+	local project_directory_name="$(printf 'day%02d' $(expr $already_projects_length + 1))"
+
+	cp -r "$template" "$project_directory_name"
+
+	echo "Successfully, Project created at $project_directory_name"
+
+	return 0
+}
+
+list() {
+
+	if [ "$templates" = "" ]
+	then
+		echo "You don't have any template."
+		return 1
+	fi
+
+	echo "Available templates: "
+	for template in $templates
+	do
+		echo $(basename $template)
+	done
+
+	return 0
+}
+
+templates_dir=".templates"
+mkdir -p $templates_dir
+templates="$(find $templates_dir/* -type d 2> /dev/null)"
+script_filename=$0
+funcs="init list help"
+target="help"
+arguments="1"
+
+if [ $# -gt 0 ]
+then
+	for func in $funcs
+	do
+		if [ "$1" = "$func" ]
+		then
+			target=$func
+			arguments=$(echo $@ ' ' | cut -d ' ' -f2-)
+			break
+		fi
+	done
+fi
+
+$target $arguments
+exit $?
