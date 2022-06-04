@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <vector>
-#include <numeric>
 
 #define DEBUG 0
 
