@@ -85,8 +85,8 @@ int main()
 		binaries.push_back(current);
 	}
 
-	const Solution::ulong oxygen 	= Solution::Rate(binaries, Solution::maxBit).getRate();
-	const Solution::ulong CO2 		= Solution::Rate(binaries, Solution::minBit).getRate();
+	const Solution::ulong oxygen = Solution::Rate(binaries, Solution::maxBit).getRate();
+	const Solution::ulong CO2 = Solution::Rate(binaries, Solution::minBit).getRate();
 
 	std::cout << oxygen * CO2 << '\n';
 
