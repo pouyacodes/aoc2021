@@ -13,7 +13,7 @@ $(TARGET): $(OBJ_FILES)
 	$(CXX) $^ -o $@ $(CXX_FLAGS)
 
 %.o: %.cpp
-	$(CXX) -c $^ -o $@
+	$(CXX) -c $^ -o $@ $(CXX_FLAGS)
 
 clean:
 	rm -rf $(OBJ_FILES)
