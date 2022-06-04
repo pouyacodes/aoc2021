@@ -5,8 +5,8 @@
 
 namespace constants
 {
-	constexpr std::size_t bits_len { 5 };
-	constexpr std::size_t data_lines { 12 };
+	constexpr std::size_t bits_len { 12 };
+	constexpr std::size_t data_lines { 1000 };
 }
 
 using BinaryNumber = std::bitset<constants::bits_len>;
